@@ -19,6 +19,13 @@ var questions = [{
         "for",
         "none of the above"],
     correctAnswer : 1
+},{
+    question:"Who is best soccer player?",
+    choices:["Cristiano Ronaldo",
+    "Paulo Dybala",
+    "Lionel Messi",
+    " Robert Lewandoski"],
+    correctAnswer:3
 }];
 
 var currentQuestion = 0;
@@ -27,11 +34,57 @@ var quizOver = false;
 displayCurrentQuestion();
 document.getElementById("quiz-message").style.display = 'none';
 function displayNext() {
-    /*Write your code here */
+    if(currentQuestion<=4)
+    {
+        var x=document.querySelector("input[type=radio]:checked");
+        if(x==null)
+        {
+            var mess=document.getElementById("quiz-message");
+            mess.style.display="inline";
+            mess.innerText='please select an answer';
+            var ChoiceListid=document.getElementById("choice-list");
+            ChoiceListid.innerHTML='';
+        }
+        else if (currentQuestion<4){
+            if(x.id==questions[currentQuestion].correctAnswer)
+            {
+                correctAnswers++;
+            }
+            var ChoiceListid=document.getElementById("choice-list");
+            ChoiceListid.innerHTML='';
+            currentQuestion++;
+        }
+        if(currentQuestion!=3) {
+            displayCurrentQuestion();
+        }
+        else
+        {
+            displayScore();
+            var mess=document.getElementById("quiz-message");
+            mess.style.display="none";
+            currentQuestion++;
+            var Next = document.getElementById("next-btn");
+            Next.innerText='Reset';
+        }
+
+    }
+    else {
+        resetQuiz();
+
+    }
+
+
 }
 
 function displayCurrentQuestion() {
-    /*Write your code here */
+    var questionid=document.getElementById("question");
+    questionid.innerHTML='<p>'+questions[currentQuestion].question+'<p>';
+    var ChoiceListid=document.getElementById("choice-list");
+    for(var x=0;x<questions[currentQuestion].choices.length;x++)
+    {
+        ChoiceListid.innerHTML += '<li>'+'<input id="'+x+'" type="radio" name="ch">'+ questions[currentQuestion].choices[x] +'</li>';
+    }
+
 }
 
 function resetQuiz() {
